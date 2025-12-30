@@ -1,14 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects | Signal & Noise</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style-internal.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Título | Ricardo Vicente</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="style-internal.css">
+
+    <style>
+        /* Additional styles for project detail content */
+        .project-detail-content h2 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .project-detail-content h3 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .project-detail-content ul, 
+        .project-detail-content ol {
+            margin-bottom: 20px;
+            padding-left: 25px;
+        }
+        
+        .project-detail-content li {
+            margin-bottom: 8px;
+        }
+        
+        .image-caption {
+            text-align: center;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: -15px;
+            margin-bottom: 25px;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -19,11 +52,14 @@
             </a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="publications.html">Publications</a></li>
                 <li><a href="projects.html">Projects</a></li>
             </ul>
             <div class="theme-buttons">
                 <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <!--<button id="language-toggle">EN | PT</button>-->
             </div>
         </nav>
     </header>
@@ -31,20 +67,32 @@
     <main>
         <!-- Page Title -->
         <h1 class="page-title">Projects</h1>
-        <p class="page-description">Research and analysis projects exploring signal in the noise</p>
+        <p class="page-description">A showcase of my data analysis and visualization work</p>
 
-        <!-- Projects Section (Empty) -->
+        <!-- Projects Filters -->
         <section class="section" id="projects-section">
             <div class="projects-filters">
                 <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="dashboard">Dashboards</button>
+                <button class="filter-btn" data-filter="ml">Machine Learning</button>
+                <button class="filter-btn" data-filter="optimization">Optimization</button>
+                <button class="filter-btn" data-filter="forecast">Forecasting</button>
             </div>
-
-            <!-- Projects Grid - Empty for now -->
+            
+            <!-- Projects Grid - filled dynamically -->
             <div class="projects-grid" id="projects-grid">
-                <div class="empty-state">
-                    <i class="fas fa-folder-open"></i>
-                    <p>Projects coming soon...</p>
-                </div>
+                <div class="loading">Loading projects...</div>
+            </div>
+        </section>
+        
+        <!-- Project Details (Initially Hidden) -->
+        <section id="project-detail" class="project-detail hidden">
+            <button id="back-button" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </button>
+            
+            <div id="project-detail-content">
+                <!-- Content will be loaded dynamically -->
             </div>
         </section>
     </main>
@@ -52,32 +100,50 @@
     <!-- Footer -->
     <footer>
         <div class="footer-links">
-            <a href="about.html">About</a>
+            <a href="about.html">About Me</a>
+            <a href="experience.html">Experience</a>
+            <a href="publications.html">Publications</a>
             <a href="projects.html">Projects</a>
         </div>
-        <p>&copy; 2025 Ricardo Vicente</p>
+        <p>&copy; 2012 | 2025.</p>
     </footer>
-
+    
     <script>
+        // Language toggle - com verificação de existência
+        const languageToggle = document.getElementById('language-toggle');
+        if (languageToggle) {
+            languageToggle.addEventListener('click', function() {
+                if (this.textContent === 'EN | PT') {
+                    this.textContent = 'PT | EN';
+                    alert('This would switch the website to Portuguese.');
+                } else {
+                    this.textContent = 'EN | PT';
+                    alert('This would switch the website to English.');
+                }
+            });
+        }
+        
         // Theme toggle
         const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
+        if (themeToggle) { // Verificar se o botão de tema existe
             const body = document.body;
-
+            
             // Check for saved theme preference or default to light
             const savedTheme = localStorage.getItem('theme') || 'light';
             if (savedTheme === 'dark') {
                 body.classList.add('dark-theme');
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
-
+            
             // Toggle theme
             themeToggle.addEventListener('click', function() {
                 if (body.classList.contains('dark-theme')) {
+                    // Switch to light theme
                     body.classList.remove('dark-theme');
                     themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
                     localStorage.setItem('theme', 'light');
                 } else {
+                    // Switch to dark theme
                     body.classList.add('dark-theme');
                     themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
                     localStorage.setItem('theme', 'dark');
@@ -85,5 +151,11 @@
             });
         }
     </script>
+
+    <!-- Project Markdown Data -->
+    <script src="js/project-data.js"></script>
+    
+    <!-- Projects Loader -->
+    <script src="js/projects-loader.js"></script>
 </body>
 </html>
