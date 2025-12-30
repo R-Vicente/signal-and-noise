@@ -1,22 +1,22 @@
 /* Palette Variables */
 :root {
     /* Light theme (default) */
-    --primary: #2F6690;
-    --secondary: #003554;
-    --text: #051923;
-    --text-light: #16425B;
-    --bg: #D9DCD6;
-    --border: #B8C4C2;
+    --primary: #2F6690;      /* Azul para botões primários (da 1ª paleta) */
+    --secondary: #003554;    /* Cor para botões secundários (azul claro) */
+    --text: #051923;         /* Texto principal - azul escuro (invertido do bg dark) */
+    --text-light: #16425B;   /* Texto secundário - azul médio-escuro */
+    --bg: #D9DCD6;           /* Fundo principal - cinza claro (exatamente como pedido) */
+    --border: #B8C4C2;       /* Cor das bordas - tom intermediário */
 }
 
 /* Dark theme */
 .dark-theme {
-    --primary: #D9DCD6;
-    --secondary: #D9DCD6;
-    --text: #D9DCD6;
-    --text-light: #EDEDED;
-    --bg: #051923;
-    --border: #153B50;
+    --primary: #D9DCD6;      /* Azul para botões primários (da 2ª paleta) */
+    --secondary: #D9DCD6;    /* Cor para botões secundários */
+    --text: #D9DCD6;         /* Texto principal - cinza claro (invertido do bg light) */
+    --text-light: #EDEDED;   /* Texto secundário - quase branco */
+    --bg: #051923;           /* Fundo principal - azul muito escuro (exatamente como pedido) */
+    --border: #153B50;       /* Cor das bordas - azul escuro médio */
 }
 
 * {
@@ -37,7 +37,7 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Slogan */
+/* Slogan posicionado no canto inferior direito */
 .bg-slogan {
     font-family: 'Poppins', sans-serif;
     font-size: 2rem;
@@ -45,9 +45,12 @@ body {
     line-height: 1.2;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+
     opacity: 1;
     user-select: none;
-    transition: color 0.3s;
+    transition: color 0.3s; /* Transição suave da cor */
+    
+    /* Posicionamento no canto inferior direito */
     position: fixed;
     bottom: 6rem;
     right: 3rem;
@@ -75,24 +78,11 @@ nav {
 }
 
 .logo {
-    display: flex;
-    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
     text-decoration: none;
-    color: var(--text);
-}
-
-.profile-image {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--primary);
-    transition: all 0.3s ease;
-}
-
-.logo:hover .profile-image {
-    transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    transition: color 0.3s;
 }
 
 .nav-links {
@@ -117,7 +107,7 @@ nav {
     gap: 0.5rem;
 }
 
-#theme-toggle {
+#language-toggle, #theme-toggle {
     background: none;
     border: 1px solid var(--border);
     padding: 0.5rem 1rem;
@@ -126,10 +116,11 @@ nav {
     font-family: inherit;
     font-weight: 500;
     color: var(--text);
+    background-color: var(--bg-alt);
     transition: color 0.3s, background-color 0.3s, border-color 0.3s;
 }
 
-#theme-toggle:hover {
+#language-toggle:hover, #theme-toggle:hover {
     border-color: var(--primary);
     background-color: var(--border);
 }
@@ -143,6 +134,7 @@ main {
     padding: 2rem;
     position: relative;
     z-index: 1;
+    transition: background-color 0.3s;
 }
 
 .hero {
@@ -150,7 +142,7 @@ main {
     max-width: 800px;
     padding: 2rem;
     border-radius: 8px;
-    background-color: transparent;
+    background-color: transparent; /* Removido o fundo com transparência */
 }
 
 .hero h1 {
@@ -197,7 +189,7 @@ main {
     transform: translateY(-3px);
 }
 
-/* Footer */
+/* Footer - versão simplificada */
 footer {
     padding: 1rem 0;
     text-align: center;
@@ -234,25 +226,25 @@ footer {
         flex-direction: column;
         gap: 1rem;
     }
-
+    
     .nav-links {
         gap: 1rem;
         flex-wrap: wrap;
         justify-content: center;
     }
-
+    
     .theme-buttons {
         margin-top: 0.5rem;
     }
-
+    
     .hero h1 {
         font-size: 2.2rem;
     }
-
+    
     .hero h2 {
         font-size: 1.2rem;
     }
-
+    
     .bg-slogan {
         font-size: 1.5rem;
         bottom: 4rem;
@@ -269,8 +261,30 @@ footer {
     }
 }
 
-/* Dark theme profile image */
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text); /* Mantém a cor de texto consistente com seu tema */
+}
+
+.profile-image {
+    width: 55px; /* Ajuste o tamanho conforme necessário */
+    height: 55px; /* Mantenha igual à largura para um círculo perfeito */
+    border-radius: 50%; /* Isto cria a moldura redonda */
+    object-fit: cover; /* Garante que a imagem cubra todo o espaço sem distorção */
+    border: 2px solid var(--primary); /* Adiciona uma borda na cor primária */
+    transition: all 0.3s ease; /* Suaviza quaisquer transições/animações */
+}
+
+/* Efeito opcional de hover */
+.logo:hover .profile-image {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Versão para modo escuro */
 .dark-theme .profile-image {
-    border-color: var(--primary);
-    box-shadow: 0 0 5px rgba(217, 220, 214, 0.3);
+    border-color: var(--primary); /* Você pode ajustar para outra cor no modo escuro */
+    box-shadow: 0 0 5px var(--primary-hover);
 }
